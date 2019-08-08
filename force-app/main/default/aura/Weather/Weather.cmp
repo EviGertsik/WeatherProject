@@ -1,0 +1,75 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId"
+  controller="WeatherController">
+  <aura:attribute name="weather" type="Object" />
+  <aura:attribute name="message" type="String" />
+  <aura:attribute name="title" type="String" />
+  <aura:attribute name="severity" type="String" />
+
+  <ltng:require styles="{! $Resource.SLDS203 + '/assets/styles/salesforce-lightning-design-system.min.css'}" />
+  <div class="slds-grid slds-wrap slds-grid--pull-padded">
+    <div class="slds-col--padded slds-size--1-of-1">
+      <ui:message class="slds-hide" title="{!v.title}" severity="{!v.severity}" closable="true" aura:id="message">
+        {!v.message}
+      </ui:message>
+      <form class="slds-form--inline">
+        <div class="slds-form-element">
+          <div class="slds-text-title_caps">City</div>
+          <div class="slds-form-element__control">
+            <ui:inputText aura:id="city" class="slds-input" placeholder="eg: London, UK" value="London, UK" />
+          </div>
+        </div>
+        <div class="slds-form-element">
+          <button class="slds-button slds-button_icon slds-button_icon-brand" title="Search" type="button"
+            onclick="{!c.getCurrentWeather}">Search
+
+          </button>
+        </div>
+      </form>
+
+    </div>
+    <div class="slds-col--padded slds-size--1-of-1">
+      <aura:if isTrue="{!v.weather != null}">
+        <div class="slds-page-header" role="banner">
+          <div class="slds-grid">
+            <div class="slds-col slds-has-flexi-truncate">
+              <div class="slds-media slds-media--center slds-no-space slds-grow">
+                <div class="slds-media__body">
+                  <p class="slds-text-heading--label">City</p>
+                  <h1 class="slds-page-header__title slds-m-right--small slds-truncate slds-align-middle"
+                    title="Record Title">
+                    {!v.weather.name},&nbsp;{!v.weather.sys.country}
+                  </h1>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="demo-only" style="width:30rem">
+            <article class="slds-tile">
+              <h3 class="slds-tile__title slds-truncate" title="Weather">
+                <a href="javascript:void(0);">Forecast</a>
+              </h3>
+              <div class="slds-tile__detail">
+                <dl class="slds-list_horizontal slds-wrap">
+                  <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Current">Current:</dt>
+                  <dd class="slds-item_detail slds-truncate" title="Current">{!v.weather.main.temp}&deg;C</dd>
+
+                  <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Minimum">Minimum:</dt>
+                  <dd class="slds-item_detail slds-truncate" title="Minimum">{!v.weather.main.temp_min}&deg;C</dd>
+
+                  <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Maximum">Maximum:</dt>
+                  <dd class="slds-item_detail slds-truncate" title="Maximum">{!v.weather.main.temp_max}&deg;C</dd>
+
+                  <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Longitude">Longitude:</dt>
+                  <dd class="slds-item_detail slds-truncate" title="Longitude">{!v.weather.coord.lon}&deg;</dd>
+
+                  <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Latitude">Latitude:</dt>
+                  <dd class="slds-item_detail slds-truncate" title="Latitude">{!v.weather.coord.lat}&deg;</dd>
+                </dl>
+              </div>
+            </article>
+          </div>
+        </div>
+      </aura:if>
+    </div>
+  </div>
+</aura:component>
