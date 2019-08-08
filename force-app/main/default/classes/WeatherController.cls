@@ -32,4 +32,6 @@ public with sharing class WeatherController {
 
 		return (result == null)?null:getCalloutResponseContents(weatherUrl);
 	}
-}
+		
+	}
+

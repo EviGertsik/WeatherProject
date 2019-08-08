@@ -1,37 +1,43 @@
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId"
   controller="WeatherController">
+  <!-- доступна с любой страницы, можно сделать отдельную табу с ней-->
+
   <aura:attribute name="weather" type="Object" />
+  <!--https://developer.salesforce.com/docs/atlas.en-us.lightning.meta/lightning/ref_aura_attribute.htm-->
   <aura:attribute name="message" type="String" />
   <aura:attribute name="title" type="String" />
   <aura:attribute name="severity" type="String" />
 
-  <ltng:require styles="{! $Resource.SLDS203 + '/assets/styles/salesforce-lightning-design-system.min.css'}" />
+  <!-- делаем сообщение об ошибке -->
+
   <div class="slds-grid slds-wrap slds-grid--pull-padded">
     <div class="slds-col--padded slds-size--1-of-1">
       <ui:message class="slds-hide" title="{!v.title}" severity="{!v.severity}" closable="true" aura:id="message">
         {!v.message}
       </ui:message>
+
+      <!-- сообщение о вводе города-->
+
       <form class="slds-form--inline">
         <div class="slds-form-element">
-          <div class="slds-text-title_caps">City</div>
-          <div class="slds-form-element__control">
+          <div class="slds-text-title">Enter the city name</div>
+          <div class="slds-form-element__control slds-col-padded">
+            <!--поле ввода города-->
             <ui:inputText aura:id="city" class="slds-input" placeholder="eg: London, UK" value="London, UK" />
-          </div>
+          
         </div>
-        <div class="slds-form-element">
-          <button class="slds-button slds-button_icon slds-button_icon-brand" title="Search" type="button"
-            onclick="{!c.getCurrentWeather}">Search
-
-          </button>
+        <!--кнопка-->
+          <lightning:button class="slds-button slds-button--brand slds-form--inline" type="button" onclick="{!c.getCurrentWeather}">Search</lightning:button>
         </div>
       </form>
-
     </div>
-    <div class="slds-col--padded slds-size--1-of-1">
+
+    <div class="slds-col--padded slds-size--1-of-1"> <!--делаю табличку с разделёнными столбцами (за это отвечает slds-col-padded)-->
       <aura:if isTrue="{!v.weather != null}">
-        <div class="slds-page-header" role="banner">
+        
+        <div class="slds-page-header" role="banner"> 
           <div class="slds-grid">
-            <div class="slds-col slds-has-flexi-truncate">
+            <div class="slds-col slds-has-flexi-truncate"> <!--усечение текста-->
               <div class="slds-media slds-media--center slds-no-space slds-grow">
                 <div class="slds-media__body">
                   <p class="slds-text-heading--label">City</p>
@@ -45,11 +51,14 @@
           </div>
           <div class="demo-only" style="width:30rem">
             <article class="slds-tile">
-              <h3 class="slds-tile__title slds-truncate" title="Weather">
-                <a href="javascript:void(0);">Forecast</a>
-              </h3>
               <div class="slds-tile__detail">
                 <dl class="slds-list_horizontal slds-wrap">
+                  <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Description">Description:</dt>
+                  <dd class="slds-item_detail slds-truncate" title="Main Description">{!v.weather.icon}</dd>
+
+                  <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Cloudiness">Cloudiness:</dt>
+                  <dd class="slds-item_detail slds-truncate" title="Cloudiness">{!v.weather.clouds.all}&#37;</dd>
+
                   <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Current">Current:</dt>
                   <dd class="slds-item_detail slds-truncate" title="Current">{!v.weather.main.temp}&deg;C</dd>
 

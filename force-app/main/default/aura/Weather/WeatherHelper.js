@@ -16,7 +16,7 @@
 						helper.message(component, 'Error!', 'error', result.message);	
 					}
 				}else{
-					helper.message(component, 'Error!', 'error', 'Some error occured while getting weather data');
+					helper.message(component, 'Error!', 'error', 'Please, check the name of the city, you have entered.');
 				}
 			}else if (state === "INCOMPLETE") {
 			}else if (state === "ERROR") {
